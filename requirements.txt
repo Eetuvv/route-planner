@@ -1,0 +1,8 @@
+openrouteservice
+paho-mqtt
+python-dotenv
+shapely
+pyproj
+pytest
+geopandas
+pytest-mock

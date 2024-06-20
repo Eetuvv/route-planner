@@ -1,0 +1,39 @@
+name: Python application test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    env:
+      MQTT_URL: asd-mqtt.rahtiapp.fi
+      MQTT_PORT: 443
+      MQTT_REQUEST_TOPIC: route/requests
+      MQTT_RESPONSE_TOPIC: route/responses
+      OPENROUTESERVICE_API_KEY: ${{ secrets.OPENROUTESERVICE_API_KEY }}
+      MOCK_API_URL: https://asd-mock-accident-api.rahtiapp.fi/accidents
+      MOCK_API_KEY: ${{ secrets.MOCK_API_KEY }}
+    
+    strategy:
+      matrix:
+        python-version: [3.12]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run pytest
+      run: |
+        pytest

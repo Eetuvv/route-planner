@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  route-planner:
+    build: .
+    environment:
+      - MQTT_URL=
+      - MQTT_PORT=443
+      - MQTT_REQUEST_TOPIC=route/requests
+      - MQTT_RESPONSE_TOPIC=route/responses
+      - OPENROUTESERVICE_API_KEY=
+      - MOCK_API_URL=
+      - MOCK_API_KEY=
